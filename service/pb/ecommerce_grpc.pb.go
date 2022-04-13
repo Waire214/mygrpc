@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.19.4
-// source: service/ecommerce/ecommerce.proto
+// source: ecommerce.proto
 
-package helloworld
+package pb
 
 import (
 	context "context"
@@ -36,7 +36,7 @@ func NewProductInfoClient(cc grpc.ClientConnInterface) ProductInfoClient {
 
 func (c *productInfoClient) AddProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*ProductID, error) {
 	out := new(ProductID)
-	err := c.cc.Invoke(ctx, "/ecommerce.ProductInfo/addProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ProductInfo/addProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (c *productInfoClient) AddProduct(ctx context.Context, in *Product, opts ..
 
 func (c *productInfoClient) GetProduct(ctx context.Context, in *ProductID, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
-	err := c.cc.Invoke(ctx, "/ecommerce.ProductInfo/getProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ProductInfo/getProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func _ProductInfo_AddProduct_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ecommerce.ProductInfo/addProduct",
+		FullMethod: "/ProductInfo/addProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductInfoServer).AddProduct(ctx, req.(*Product))
@@ -112,7 +112,7 @@ func _ProductInfo_GetProduct_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ecommerce.ProductInfo/getProduct",
+		FullMethod: "/ProductInfo/getProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductInfoServer).GetProduct(ctx, req.(*ProductID))
@@ -124,7 +124,7 @@ func _ProductInfo_GetProduct_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductInfo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ecommerce.ProductInfo",
+	ServiceName: "ProductInfo",
 	HandlerType: (*ProductInfoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -137,5 +137,5 @@ var ProductInfo_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service/ecommerce/ecommerce.proto",
+	Metadata: "ecommerce.proto",
 }

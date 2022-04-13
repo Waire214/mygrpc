@@ -1,7 +1,6 @@
 syntax = "proto3";
-option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
 
-package ecommerce;
+option go_package = "service/pb";
 
 service ProductInfo {
     rpc addProduct(Product) returns (ProductID);
@@ -18,3 +17,4 @@ message ProductID {
     string value = 1;
 }
 
+// protoc --proto_path=service/proto service/proto/*.proto --go_out=. --go-grpc_out=.
