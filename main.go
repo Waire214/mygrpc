@@ -1,22 +1,27 @@
 package main
 
 import (
+	"google.golang.org/grpc"
+	"grpcUser/proto/pb"
+	"grpcUser/server"
 	"log"
 	"net"
-	"product/server/service/pb"
-	"product/server/service/servers"
+)
 
-	"google.golang.org/grpc"
+const (
+	port = ":8080"
 )
 
 func main() {
-	listener, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", port)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterProductInfoServer(s, &servers.Server{})
-	if err := s.Serve(listener); err != nil {
+	serve := server.NewServer(&pb.UserRequests{})
+
+	pb.RegisterUserServiceServer(s, serve)
+	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
 }

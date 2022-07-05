@@ -1,0 +1,29 @@
+// the proto version
+syntax = "proto3";
+package grpcUser;
+// define where you want the generated code to be
+option go_package = "/proto/pb";
+
+message UserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string address = 3;
+  bool verified = 4;
+}
+message UserRequests {
+  repeated UserRequest users = 1;
+}
+
+message GetUserRequest {
+  bool verified = 1;
+}
+
+message Response {
+  int32 code = 1;
+  string message = 2;
+}
+
+service UserService {
+  rpc AddUser(UserRequest) returns (Response);
+  rpc GetUser(GetUserRequest) returns (UserRequests);
+}
